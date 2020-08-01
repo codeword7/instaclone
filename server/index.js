@@ -2,12 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const {MONGOURI} = require('./keys')
 require('./models/user')
+require('./models/post')
 const authRoutes = require('./routes/auth')
+const postRoutes = require('./routes/post')
 const app = express();
 const PORT = 5000;
 
 app.use(express.json())
 app.use(authRoutes)
+app.use(postRoutes)
 
 mongoose.connect(MONGOURI, {
     useNewUrlParser: true,
