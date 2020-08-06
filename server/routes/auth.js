@@ -11,6 +11,9 @@ router.post('/signup', (req, res) => {
     if(!email || !name || !password){
         return res.status(422).json({error: "please add all the fields"})
     }
+    if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+        return res.status(422).json({error: "please check the format of email"})
+    }
     User.findOne({email: email})
     .then((savedUser) => {
         if(savedUser){
