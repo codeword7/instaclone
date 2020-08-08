@@ -1,5 +1,6 @@
 import React,{useState, useEffect, useContext} from 'react';
 import {UserContext} from '../../App'
+import {Link} from 'react-router-dom'
 
 const Home= () => {
     const [data, setData] = useState([])
@@ -116,7 +117,7 @@ const Home= () => {
                 data.map((item) => {
                     return (
                     <div className="card home-card" key={item._id}>
-                        <h5>{item.postedBy.name} {
+                        <h5><Link to={ item.postedBy._id !== state._id ? '/profile/' + item.postedBy._id : '/profile'}>{item.postedBy.name}</Link> {
                             item.postedBy._id === state._id && <i className="material-icons" style={{float: 'right'}} onClick={() => deletePost(item._id)}>delete</i>
                         }</h5>
                         <div className="card-image">
