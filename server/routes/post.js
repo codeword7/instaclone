@@ -16,7 +16,7 @@ router.get('/allpost', (req, res) => {
     })
 })
 
-router.get('/getsubpost', (req, res) => {
+router.get('/getsubpost', requireLogin, (req, res) => {
     Post.find({postedBy: {$in: req.user.following}})
     .populate("postedBy", "_id name")
     .populate("comments.postedBy", "_id name")
@@ -65,7 +65,7 @@ router.put('/like', requireLogin, (req, res) => {
     }, {
         new: true
     })
-    .populate("postedBy", "name _id")
+    .populate("postedBy", "_id name")
     .exec((err, result) => {
         if(err){
             return res.status(422).json({error: err})
@@ -81,7 +81,7 @@ router.put('/unlike', requireLogin, (req, res) => {
     }, {
         new: true
     })
-    .populate("postedBy", "name _id")
+    .populate("postedBy", "_id name")
     .exec((err, result) => {
         if(err){
             return res.status(422).json({error: err})
@@ -101,8 +101,8 @@ router.put('/comment', requireLogin, (req, res) => {
     }, {
         new: true
     })
-    .populate("comments.postedBy", "name _id")
-    .populate("postedBy", "name _id")
+    .populate("comments.postedBy", "_id name")
+    .populate("postedBy", "_id name")
     .exec((err, result) => {
         if(err){
             return res.status(422).json({error: err})
